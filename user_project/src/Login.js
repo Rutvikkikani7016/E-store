@@ -1,8 +1,63 @@
 import React, { Component } from 'react'
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import Header from './Header'
 import Footer from './Footer'
+import axios from 'axios'
+import Cookie from 'js-cookie'
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            message: ''
+        }
+
+    }
+    login = (e) => {
+        var self = this;
+        var apiurl = 'https://www.theeasylearnacademy.com/shop/ws/login.php';
+       // console.log('form submitted successfully');
+      //  console.log(this.state);
+        var formdata = new FormData();
+        formdata.append("email", this.state.email);
+        formdata.append("password", this.state.password);
+        axios({
+            url: apiurl,
+            method: 'post',
+            data: formdata,
+            responseType: 'json',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(function (response) {
+            console.log(response.data);
+            if (response.data[0]['error'] !== 'no') {
+                alert(response.data[0]['error']);
+            }
+            else if (response.data[1]['success'] == 'no') {
+                self.setState({
+                    message: response.data[2]['message']
+                });
+            }
+            else {
+                //login successfull
+                alert('login successfull');
+                // create cookie
+                Cookie.set('isLoggedIn',true);
+                Cookie.set('id',response.data[3]['id'])
+                //redirect on login route
+                window.location = '/';
+            }
+        });
+        e.preventDefault();
+    }
+    updateValue = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+
+    }
     render() {
         return (<div>
             <Header />
@@ -30,12 +85,12 @@ class Login extends Component {
                                         <div className="login_part_form_iner">
                                             <h3>Welcome Back ! <br />
                                                 Please Sign in now</h3>
-                                            <form className="row contact_form" action="#" method="post" noValidate="novalidate">
+                                            <form className="row contact_form" onSubmit={this.login} action='#' noValidate="novalidate">
                                                 <div className="col-md-12 form-group p_star">
-                                                    <input type="text" className="form-control" id="name" name="name" defaultValue placeholder="Username" />
+                                                    <input type="email" className="form-control" id="email" name="email" placeholder="email" onChange={this.updateValue} />
                                                 </div>
                                                 <div className="col-md-12 form-group p_star">
-                                                    <input type="password" className="form-control" id="password" name="password" defaultValue placeholder="Password" />
+                                                    <input type="password" className="form-control" id="password" name="password" placeholder="Password" onChange={this.updateValue} />
                                                 </div>
                                                 <div className="col-md-12 form-group">
                                                     <button type="submit" value="submit" className="btn_3">
@@ -44,6 +99,7 @@ class Login extends Component {
                                                     <Link className="lost_pass" to="/Register">Sign UP</Link> &nbsp;
                                                     <Link className="lost_pass" to="/Forgot_password">forget password?</Link>
                                                 </div>
+                                                <div>{this.state.message}</div>
                                             </form>
                                         </div>
                                     </div>

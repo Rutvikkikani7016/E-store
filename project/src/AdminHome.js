@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 class AdminHome extends Component
 {
     render()
@@ -18,11 +19,11 @@ class AdminHome extends Component
                       <div className="row g-0">
                         <div className="col-12 col-sm-9">
                           <div className="card-body">
-                            <a href="/admin-category" className="card-link text-white">
+                            <Link to="/admin-category" className="card-link text-white">
                               <div className="display-4">
                                 20 Categories
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -33,11 +34,11 @@ class AdminHome extends Component
                       <div className="row g-0">
                         <div className="col-12 col-sm-9">
                           <div className="card-body">
-                            <a href="/admin-product" className="card-link text-white">
+                            <Link to="/admin-product" className="card-link text-white">
                               <div className="display-4">
                                 100 Products
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -50,11 +51,11 @@ class AdminHome extends Component
                       <div className="row g-0">
                         <div className="col-12 col-sm-9">
                           <div className="card-body">
-                            <a href="/admin-users" className="card-link text-white">
+                            <Link to="/admin-users" className="card-link text-white">
                               <div className="display-4">
                                 130 Users
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -65,11 +66,11 @@ class AdminHome extends Component
                       <div className="row g-0">
                         <div className="col-12 col-sm-9">
                           <div className="card-body">
-                            <a href="/admin-orders" className="card-link text-white">
+                            <Link to="/admin-orders" className="card-link text-white">
                               <div className="display-4">
                                 500 Orders
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes,Route } from 'react-router-dom';
 import Home from './Home'
 import Category from './Category'
 import Login from './Login';
+import Logout from './Logout';
 import Register from './Register';
 import Forgot_password from './Forgot_Password';
 import ChangePassword from './ChangePassword';
@@ -24,13 +25,14 @@ function MyRouter() {
             <Route path='/' element={<Home />} />
             <Route path='/product-category' element={<Category />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/logout' element={<Logout />} />
             <Route path='/register' element={<Register />} />
             <Route path='/forgot_password' element={<Forgot_password />} />
             <Route path='/change-password' element={<ChangePassword />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/checkout' element={<Checkout />} />
-            <Route path='/product-list' element={<ProductList />} />
-            <Route path='/product_detail' element={<ProductDetail />} />
+            <Route path='/product-list/:productid' element={<ProductList />} />
+            <Route path='/product_detail/:productid' element={<ProductDetail />} />
             <Route path='/order-confirmation' element={<Confirmation />} />
           
         </Routes>

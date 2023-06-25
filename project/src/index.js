@@ -24,17 +24,17 @@ function MyRouter() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route path='/admin-home' element={<AdminHome />} />
+          <Route path='/' element={<AdminHome />} />
           <Route path='/admin-category' element={<AdminCategory />} />
           <Route path='/admin-insert-category' element={<AdminInsertCategory />} />
           <Route path='/admin-edit-category' element={<AdminEdittCategory />} />
           <Route path='/admin-product' element={<AdminProduct />} />
           <Route path='/admin-insert-product' element={<AdminInsertProduct />} />
-          <Route path='/admin-edit-product' element={<AdminEditProduct />} />
+          <Route path='/admin-edit-product/:productid' element={<AdminEditProduct />} />
           <Route path='/admin-users' element={<AdminUsers />} />
           <Route path='/admin-login' element={<AdminLogin />} />
           <Route path='/admin-orders' element={<AdminOrder />} />
-          <Route path='/admin-order-detail' element={<AdminOrderDetail />} />
+          <Route path='/admin-order-detail/:orderid' element={<AdminOrderDetail />} />
           <Route path='/admin-change-password' element={<AdminChangePassword />} />
           <Route path='/admin-forgot-password' element={<AdminForgotPassword />} />
         </Route>

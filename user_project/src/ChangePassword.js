@@ -1,8 +1,90 @@
 import React, { Component } from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import Cookies from 'js-cookie';
+import axios from 'axios'
 class ChangePassword extends Component
 {
+    constructor(props)
+    {
+      super(props);
+      this.state = {
+
+      };
+    }
+    UpdateValue = (e) => {
+      this.setState({
+        [e.target.name] : e.target.value
+      });
+    }
+    submitForm = (e) =>{
+      e.preventDefault();
+      console.log(this.state);
+      if(this.isValidInput()==true)
+      {
+          this.UpdatePassword();
+      }
+    }
+    isValidInput()
+    {
+      var isValid = true;
+      //check password and new password are not same 
+      if(this.state.password == this.state.new_password)
+      {
+        alert('password and new password must not be same');
+        isValid = false;
+      }
+      //further check new_password and confirm_new_password must be same 
+      else if(this.state.new_password != this.state.confirm_new_password)
+      {
+        alert('new password and confirm new password are not same');
+        isValid = false;
+      }
+      return isValid;
+    }
+
+    UpdatePassword()
+    {
+        var self = this;
+        var form = new FormData();
+        //input : id,password,newpassword(required) 
+        form.append("id",Cookies.get("id"));
+        form.append("password",this.state.password);
+        form.append("newpassword",this.state.new_password);
+
+        axios({
+          method: 'post',
+          url: 'https://www.theeasylearnacademy.com/shop/ws/change_password.php',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          responseType: 'json',
+          data: form
+        }).then((response) =>{
+            console.log(response.data);
+            /*
+             [{"error":"input is missing"}] 
+             [{"error":"no"},{"success":"no"},{"message":"invalid change password attempt"}]
+             [{"error":"no"},{"success":"yes"},{"message":"password changed"}]
+            */
+            var error = response.data[0]['error'];
+            if(error!='no')
+            {
+              alert(error);
+            }
+            else 
+            {
+                alert(response.data[2]['message']);
+                if(response.data[1]['success']==='yes')
+                {
+                  window.location = '/';
+                  Cookies.remove("isLoggedIn");
+                  Cookies.remove("id");
+                }
+            }
+        });
+    }
+
     render()
     {
         return(<div>
@@ -30,13 +112,14 @@ class ChangePassword extends Component
             <div className="login_part_form">
               <div className="login_part_form_iner">
                 <h3>Change Your Password</h3>
-                <form className="row contact_form" action="#" method="post" noValidate="novalidate">
+                <form className="row contact_form"  method="post" onSubmit={this.submitForm} >
                   <div className="col-md-12 form-group p_star">
-                    <input type="password" className="form-control" id="password" name="password" defaultValue placeholder="Current Password" />
+                    <input type="password" className="form-control" id="password" name="password"  placeholder="Current Password"
+                    onChange={this.UpdateValue} required />
                   </div><div className="col-md-12 form-group p_star">
-                    <input type="password" className="form-control" id="password" name="password" defaultValue placeholder="New Password" />
+                    <input type="password" className="form-control" id="new_password" name="new_password"  placeholder="New Password" onChange={this.UpdateValue} required />
                   </div><div className="col-md-12 form-group p_star">
-                    <input type="password" className="form-control" id="password" name="password" defaultValue placeholder="Confirm  New Password" />
+                    <input type="password" className="form-control" id="confirm_new_password" name="confirm_new_password"  placeholder="Confirm  New Password" onChange={this.UpdateValue} required />
                   </div>
                   <div className="col-md-12 form-group">
                     <button type="submit" value="submit" className="btn_3">

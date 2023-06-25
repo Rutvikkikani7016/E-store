@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 class AdminForgotPassword extends Component
 {
     render()
@@ -17,7 +18,7 @@ class AdminForgotPassword extends Component
                     <label htmlFor="floatingInput">Email address</label>
                   </div>
                   <button type="button" className="btn btn-danger">Recover Account</button> <br />
-                  <p className="text-center"><a href="admin-login">Login</a></p>
+                  <p className="text-center"><Link to="admin-login">Login</Link></p>
                 </form>
               </div>
             </div>
